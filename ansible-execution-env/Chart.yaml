@@ -1,0 +1,6 @@
+apiVersion: v2
+name: ansible-execution-env
+description: A Helm chart for deploying an ansible execution environment application
+type: application
+version: 0.1.0
+appVersion: "latest"

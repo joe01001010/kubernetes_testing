@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.commonName }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.commonName }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.commonName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.commonName }}
+    spec:
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecrets.name }}
+      containers:
+        - name: {{ .Values.container.name }}
+          image: "{{ .Values.quay.repositoryUrl }}/{{ .Values.quay.image }}:{{ .Values.quay.tag }}"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: {{ .Values.container.ports.containerPort }}
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10

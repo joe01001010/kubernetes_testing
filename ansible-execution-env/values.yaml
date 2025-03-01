@@ -1,0 +1,17 @@
+commonName: "ansible-execution-env"
+
+namespace: "ansible-execution-env"
+
+replicaCount: 2
+quay:
+  repositoryUrl: "quay.io"
+  image: "joeweibel77/ubi9-2.18.2-ee-python312"
+  tag: "latest"
+  dockerconfigjson: "ewogICJhdXRocyI6IHsKICAgICJxdWF5LmlvIjogewogICAgICAidXNlcm5hbWUiOiAiam9ld2VpYmVsNzciLAogICAgICAicGFzc3dvcmQiOiAiKldlaWJlbDExKiIsCiAgICAgICJlbWFpbCI6ICJqb2V3ZWliZWw3N0BnbWFpbC5jb20iCiAgICB9CiAgfQp9Cg=="
+imagePullSecrets:
+  name: quay-registry-secret
+
+container:
+  name: ansible-execution-env
+  ports:
+    containerPort: 8080
